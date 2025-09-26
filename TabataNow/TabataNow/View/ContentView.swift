@@ -7,18 +7,14 @@
 
 import SwiftUI
 
+// This view is no longer used. Keep a minimal placeholder to avoid Xcode errors
+// if the file is still referenced by the project. Can be safely removed.
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
+        HomeView()
     }
 }
 
 #Preview {
-    ContentView()
+    HomeView()
 }

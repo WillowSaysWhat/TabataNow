@@ -1,0 +1,187 @@
+---
+description: swift & swiftUI rules for this project
+globs:
+alwaysApply: true
+---
+
+MVVM pattern for SwiftUI:
+
+Views/ → SwiftUI Views
+
+ViewModels/ → ObservableObject classes
+
+Models/ → Data models
+
+Services/ → Networking, persistence, etc.
+
+Utilities/ → Helpers, extensions
+
+Each file should contain one primary type (struct/class/enum).
+
+Keep SwiftUI views small and composable. Break down large views into subviews.
+
+
+
+  You are an expert iOS developer using Swift and SwiftUI. Follow these guidelines:
+
+
+  # Code Structure
+
+  - Use Swift's latest features and protocol-oriented programming
+  - Prefer value types (structs) over classes
+  - Use MVVM architecture with SwiftUI
+  - Structure: Features/, Core/, UI/, Resources/
+  - Follow Apple's Human Interface Guidelines
+
+  
+  # Naming
+  - camelCase for vars/funcs, PascalCase for types
+  - Verbs for methods (fetchData)
+  - Boolean: use is/has/should prefixes
+  - Clear, descriptive names following Apple style
+
+
+  # Swift Best Practices
+
+  - Strong type system, proper optionals
+  - async/await for concurrency
+  - Result type for errors
+  - @Published, @StateObject for state
+  - Prefer let over var
+  - Protocol extensions for shared code
+
+
+  # UI Development
+
+  - SwiftUI first, UIKit when needed
+  - SF Symbols for icons
+  - Support dark mode, dynamic type
+  - SafeArea and GeometryReader for layout
+  - Handle all screen sizes and orientations
+  - Implement proper keyboard handling
+
+
+  # Performance
+
+  - Profile with Instruments
+  - Lazy load views and images
+  - Optimize network requests
+  - Background task handling
+  - Proper state management
+  - Memory management
+
+
+  # Data & State
+
+  - SwiftData for complex models
+  - UserDefaults for preferences
+  - Combine for reactive code
+  - Clean data flow architecture
+  - Proper dependency injection
+  - Handle state restoration
+
+
+
+  # Testing & Quality
+
+  - XCTest for unit tests
+  - XCUITest for UI tests
+  - Test common user flows
+  - Performance testing
+  - Error scenarios
+  - Accessibility testing
+
+
+  # Essential Features
+
+  - Deep linking support
+  - Push notifications
+  - Background tasks
+  - Localization
+  - Error handling
+  - Analytics/logging
+
+
+  # Development Process
+
+  - Use SwiftUI previews
+  - Git branching strategy
+  - Code review process
+  - CI/CD pipeline
+  - Documentation
+  - Unit test coverage
+
+
+  # App Store Guidelines
+
+  - Privacy descriptions
+  - App capabilities
+  - In-app purchases
+  - Review guidelines
+  - App thinning
+  - Proper signing
+
+
+  Follow Apple's documentation for detailed implementation guidance.
+  
+  3. SwiftUI Rules
+
+Use @State for local, view-only state.
+
+Use @StateObject for owning a reference to a ViewModel.
+
+Use @ObservedObject when receiving a ViewModel from elsewhere.
+
+Use @EnvironmentObject sparingly for global shared state.
+
+Always extract preview providers for UI testing.
+
+Use modifiers in logical order:
+
+Layout (frame, padding)
+
+Styling (background, foregroundColor)
+
+Effects (shadow, animation)
+
+4. Concurrency & Data
+
+Use Swift Concurrency (async/await) instead of completion handlers where possible.
+
+Always mark UI-updating calls with @MainActor.
+
+Use Task {} carefully inside views — prefer delegating async work to view models.
+
+Wrap networking in a NetworkService with URLSession + Codable.
+
+5. Error Handling
+
+Use Result<T, Error> or throws for async calls.
+
+Provide meaningful error messages, not just .localizedDescription.
+
+Avoid silent failures — log errors with os_log or a logging utility.
+
+6. Testing
+
+Write unit tests for:
+
+ViewModels (business logic)
+
+Services (network, persistence)
+
+Use SwiftUI Previews and UI Tests for Views.
+
+7. Cursor AI Usage Rules
+
+Always follow the MVVM project structure.
+
+Never mix business logic inside SwiftUI Views. Put it in ViewModels.
+
+Always prefer async/await over completion closures unless interoperability requires otherwise.
+
+Do not generate storyboards or UIKit code unless explicitly asked.
+
+All new SwiftUI Views must include a preview.
+
+Write concise, readable code over clever/obscure code.
