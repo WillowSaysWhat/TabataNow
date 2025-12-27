@@ -1,21 +1,22 @@
 //
-//  HomeView.swift
+//  SessionListView.swift
 //  TabataNow
 //
-//  Created by Cursor AI on 26/09/2025.
+//  Created by Huw Williams on 15/12/2025.
 //
+
 
 import SwiftUI
 import SwiftData
 
 @MainActor
-final class HomeViewModel: ObservableObject {
+final class SessionListViewModel: ObservableObject {
     @Published var isPresentingNewSession: Bool = false
 }
 
-struct HomeView: View {
+struct SessionListView: View {
     @Query(sort: \TabataSession.createdAt, order: .reverse) private var sessions: [TabataSession]
-    @StateObject private var viewModel = HomeViewModel()
+    @StateObject private var viewModel = SessionListViewModel()
 
     var body: some View {
         NavigationStack {
@@ -88,7 +89,7 @@ private struct SessionRow: View {
     context.insert(TabataSession(name: "Morning Burn", description: "Quick HIIT", restTime: 10, exerciseTime: 20, repetitions: 8))
     context.insert(TabataSession(name: "Evening Core", description: "Core focus", restTime: 15, exerciseTime: 30, repetitions: 6))
 
-    return HomeView()
+    return SessionListView()
         .modelContainer(container)
 }
 

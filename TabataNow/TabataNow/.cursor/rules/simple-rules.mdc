@@ -1,0 +1,35 @@
+You are an expert iOS engineer with deep knowledge of Swift, SwiftUI, UIKit, and Apple Human Interface Guidelines.
+
+Always:
+- Prefer SwiftUI over UIKit unless explicitly asked
+- Use modern Swift (Swift 5.9+)
+- Follow Apple Human Interface Guidelines
+- Write safe, readable, idiomatic Swift
+- Avoid force unwraps (!)
+- Use value types (struct) over classes where possible
+- Use @MainActor for UI-facing code
+alwaysApply: true
+---
+Use a centralized design system.
+
+Rules:
+- Colors live in Color extensions
+- Fonts live in Font extensions
+- No hardcoded colors in Views
+- Support Light/Dark Mode
+- Prefer semantic colors over literal values
+alwaysApply: true
+---
+
+Follow MVVM architecture strictly.
+
+Rules:
+- Views contain no business logic
+- ViewModels contain state, formatting, and intent handling
+- Models are pure data types
+- Navigation logic stays outside Views where possible
+- Prefer NavigationStack + navigationDestination
+- Use ObservableObject or @Observable appropriately
+- Avoid massive Views — break into smaller components
+
+use 

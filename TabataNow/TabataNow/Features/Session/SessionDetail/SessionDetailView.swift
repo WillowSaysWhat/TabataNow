@@ -27,7 +27,8 @@ struct SessionDetailView: View {
                 NavigationLink {
                     TimerView(exerciseTime: session.exerciseTime,
                               restTime: session.restTime,
-                              repetitions: session.repetitions)
+                              repetitions: session.repetitions,
+                              sessionName: session.name)
                 } label: {
                     Label("Tabata Now?", systemImage: "play.circle.fill")
                 }

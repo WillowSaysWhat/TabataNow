@@ -24,6 +24,7 @@ final class TimerViewModel: ObservableObject {
     @Published private(set) var isRunning: Bool = false
     @Published private(set) var remainingSeconds: Int
     @Published private(set) var totalElapsedSeconds: Int = 0
+    @Published private(set) var isFinished: Bool = false
 
     private var timer: Timer?
     private let speechSynthesizer = AVSpeechSynthesizer()
@@ -141,6 +142,7 @@ final class TimerViewModel: ObservableObject {
 
     private func finish() {
         pause()
+        isFinished = true
         speak("Finished")
     }
 

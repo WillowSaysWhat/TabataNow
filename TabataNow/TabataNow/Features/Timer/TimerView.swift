@@ -6,13 +6,25 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct TimerView: View {
-    @Environment(\ .dismiss) private var dismiss
+    @Environment(\.dismiss) private var dismiss
+    @Environment(\.modelContext) private var modelContext
     @StateObject private var viewModel: TimerViewModel
     @State private var showAbandonConfirm: Bool = false
+    @State private var showCompletionAlert: Bool = false
+    
+    let sessionName: String
+    let exerciseTime: Int
+    let restTime: Int
+    let repetitions: Int
 
-    init(exerciseTime: Int, restTime: Int, repetitions: Int) {
+    init(exerciseTime: Int, restTime: Int, repetitions: Int, sessionName: String = "Workout") {
+        self.exerciseTime = exerciseTime
+        self.restTime = restTime
+        self.repetitions = repetitions
+        self.sessionName = sessionName
         _viewModel = StateObject(wrappedValue: TimerViewModel(exerciseTime: exerciseTime, restTime: restTime, repetitions: repetitions))
     }
 
@@ -98,7 +110,33 @@ struct TimerView: View {
         } message: {
             Text("Your progress will be lost.")
         }
+        .alert("Workout Complete!", isPresented: $showCompletionAlert) {
+            Button("Done") {
+                dismiss()
+            }
+        } message: {
+            Text("Great job! Your workout has been saved.")
+        }
+        .onChange(of: viewModel.isFinished) { _, isFinished in
+            if isFinished {
+                saveCompletedWorkout()
+                showCompletionAlert = true
+            }
+        }
         .onDisappear { viewModel.pause() }
+    }
+    
+    private func saveCompletedWorkout() {
+        let completedWorkout = CompletedWorkout(
+            completedAt: .now,
+            durationSeconds: viewModel.totalElapsedSeconds,
+            sessionName: sessionName,
+            exerciseTime: exerciseTime,
+            restTime: restTime,
+            repetitions: repetitions
+        )
+        modelContext.insert(completedWorkout)
+        try? modelContext.save()
     }
 }
 

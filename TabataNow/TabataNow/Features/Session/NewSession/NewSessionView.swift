@@ -9,8 +9,8 @@ import SwiftUI
 import SwiftData
 
 struct NewSessionView: View {
-    @Environment(\ .dismiss) private var dismiss
-    @Environment(\ .modelContext) private var modelContext
+    @Environment(\.dismiss) private var dismiss
+    @Environment(\.modelContext) private var modelContext
     @StateObject private var viewModel = NewSessionViewModel()
 
     var body: some View {
