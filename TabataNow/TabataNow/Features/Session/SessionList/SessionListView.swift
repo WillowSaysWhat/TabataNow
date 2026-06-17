@@ -19,37 +19,34 @@ struct SessionListView: View {
     @StateObject private var viewModel = SessionListViewModel()
 
     var body: some View {
-        NavigationStack {
-            List {
-                if sessions.isEmpty {
-                    ContentUnavailableView("No Sessions",
-                                            systemImage: "timer",
-                                            description: Text("Create your first Tabata session"))
-                } else {
-                    ForEach(sessions) { session in
-                        NavigationLink(value: session) {
-                            SessionRow(session: session)
-                        }
-                    }
-                }
-            }
-            .navigationTitle("Tabata Now")
-            .toolbar {
-                ToolbarItem(placement: .primaryAction) {
-                    Button {
-                        viewModel.isPresentingNewSession = true
+        List {
+            if sessions.isEmpty {
+                ContentUnavailableView("No Sessions",
+                                        systemImage: "timer",
+                                        description: Text("Create your first Tabata session"))
+            } else {
+                ForEach(sessions) { session in
+                    NavigationLink {
+                        SessionDetailView(session: session)
                     } label: {
-                        Image(systemName: "plus")
+                        SessionRow(session: session)
                     }
-                    .accessibilityLabel("New Session")
                 }
             }
-            .navigationDestination(for: TabataSession.self) { session in
-                SessionDetailView(session: session)
+        }
+        .navigationTitle("Tabata Now")
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                Button {
+                    viewModel.isPresentingNewSession = true
+                } label: {
+                    Image(systemName: "plus")
+                }
+                .accessibilityLabel("New Session")
             }
-            .sheet(isPresented: $viewModel.isPresentingNewSession) {
-                NewSessionView()
-            }
+        }
+        .sheet(isPresented: $viewModel.isPresentingNewSession) {
+            NewSessionView()
         }
     }
 }
@@ -89,8 +86,10 @@ private struct SessionRow: View {
     context.insert(TabataSession(name: "Morning Burn", description: "Quick HIIT", restTime: 10, exerciseTime: 20, repetitions: 8))
     context.insert(TabataSession(name: "Evening Core", description: "Core focus", restTime: 15, exerciseTime: 30, repetitions: 6))
 
-    return SessionListView()
-        .modelContainer(container)
+    return NavigationStack {
+        SessionListView()
+    }
+    .modelContainer(container)
 }
 
 

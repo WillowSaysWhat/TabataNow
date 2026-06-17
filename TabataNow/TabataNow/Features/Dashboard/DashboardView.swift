@@ -6,12 +6,12 @@
 //
 
 import SwiftUI
+import SwiftData
+
 
 struct DashboardView: View {
-    
     var body: some View {
         NavigationStack {
-            
             VStack(alignment: .leading) {
                 
                 Text("DASHBOARD")
@@ -31,7 +31,6 @@ struct DashboardView: View {
             
             Spacer()
         }
-        
     }
 }
 
@@ -91,19 +90,14 @@ struct HistoryListView: View {
 //MARK: Select Workout
 struct SelectWorkoutButton: View {
     var body: some View {
-        
-        
         ZStack {
-            
-                
-            // hoizonal bar
+            // horizontal bar
             RoundedRectangle(cornerRadius: 0)
                 .fill(Color.innerBackground)
                 .frame(height: 60)
                 .overlay(
                      RoundedRectangle(cornerRadius: 0)
                          .stroke(Color.white.opacity(0.08), lineWidth: 2)
-                    
                 )
             Text("Select Workout")
                 .font(.title)
