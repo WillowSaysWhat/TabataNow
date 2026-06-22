@@ -8,6 +8,13 @@
 import SwiftUI
 import SwiftData
 
+//---- Dashboard view
+
+// Views in this file
+// DashboardView
+// ActivityRingAndBar
+// HistoryListView
+// SelectWorkoutButton
 
 struct DashboardView: View {
     var body: some View {
@@ -28,6 +35,7 @@ struct DashboardView: View {
             
             // Navigation button +
             SelectWorkoutButton()
+            PushUpsNowButton()
             
             Spacer()
         }
@@ -36,6 +44,7 @@ struct DashboardView: View {
 
 #Preview {
     DashboardView()
+        .modelContainer(for: [TabataSession.self, CompletedWorkout.self], inMemory: true)
 }
 
 
@@ -59,17 +68,22 @@ struct ActivityRingAndBar: View {
                 VStack {
                     
                     HStack {
-                        MedalView(isActive: true)
-                        MedalView(isActive: true)
-                        MedalView(isActive: true)
-                        MedalView(isActive: true)
+                        MedalView(isActive: MedalUserDefaults.hasCompletedMedal1)
+                        MedalView(isActive: MedalUserDefaults.hasCompletedMedal2)
+                        MedalView(isActive: MedalUserDefaults.hasCompletedMedal3)
+                        MedalView(isActive: MedalUserDefaults.hasCompletedMedal4)
                         
                     }
                     Text("Level: Beginner")
                     Text("Next: Novice")
-                    LevelProgressBar(progress: 0.6)
-                        .padding(.top, 3)
-                    
+
+                    HStack(spacing: 8) {
+                        TrophyView(isActive: true)
+                        TrophyView(isActive: true)
+                        TrophyView(isActive: true)
+                        TrophyView(isActive: true)
+                    }
+                    .padding(.top, 3)
                 }
                 .padding()
                 
@@ -79,11 +93,13 @@ struct ActivityRingAndBar: View {
 
 //MARK: History List
 struct HistoryListView: View {
+    @Query(sort: \CompletedWorkout.completedAt, order: .reverse) private var completedWorkouts: [CompletedWorkout]
+    @StateObject private var viewModel = DashboardViewModel()
+
     var body: some View {
-        
-        HistoryRowView(title: "day before", didStrength: true, didFlame: false, didMedal: false, didCheck: false)
-        HistoryRowView(title: "Yesterday", didStrength: true, didFlame: true, didMedal: true, didCheck: true)
-        HistoryRowView(title: "TODAY", isInactive: true, didStrength: false, didFlame: false, didMedal: false, didCheck: false)
+        ForEach(viewModel.historyRows(for: completedWorkouts)) { status in
+            HistoryRowView(status: status)
+        }
     }
 }
 
@@ -127,5 +143,47 @@ struct SelectWorkoutButton: View {
             .offset(x: 110) // offsets the plus button to the right
         }
         .frame(height: 80) // gives a little more space inside the frame for rectangle and circle without interfering with the layout.
+    }
+}
+
+//MARK: PushUps Now
+struct PushUpsNowButton: View {
+    var body: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 0)
+                .fill(Color.innerBackground)
+                .frame(height: 60)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 0)
+                        .stroke(Color.white.opacity(0.08), lineWidth: 2)
+                )
+
+            Text("PushUps Now")
+                .font(.title)
+                .offset(x: 34)
+
+            NavigationLink {
+                Text("PushUps placeholder")
+                    .navigationTitle("PushUps")
+            } label: {
+                ZStack {
+                    Circle()
+                        .fill(.black)
+                        .frame(height: 100)
+                        .overlay(
+                            ZStack {
+                                Circle()
+                                    .stroke(Color.white.opacity(0.2), lineWidth: 2)
+                                Image(systemName: "figure.strengthtraining.traditional")
+                                    .foregroundStyle(Color.neon)
+                                    .font(.system(size: 44, weight: .semibold))
+                            }
+                        )
+                }
+            }
+            .buttonStyle(.plain)
+            .offset(x: -110)
+        }
+        .frame(height: 80)
     }
 }

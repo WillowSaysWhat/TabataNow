@@ -7,19 +7,46 @@
 
 import SwiftUI
 
-/// A single row in the History card (hard-coded placeholders you can replace later).
+/// A single row in the History card.
 struct HistoryRowView: View {
 
-    // MARK: - Placeholders (replace later)
-    var title: String = "Yesterday"
-    /// "inactive" dims the row like TODAY in your prototype.
-    var isInactive: Bool = false
+    var title: String
+    /// Dims the row styling — used for TODAY while goals are still in progress.
+    var isInactive: Bool
 
-    /// Toggle these to represent completion states later
-    var didStrength: Bool = true
-    var didFlame: Bool = true
-    var didMedal: Bool = false
-    var didCheck: Bool = true
+    /// At least one workout completed that day.
+    var didStrength: Bool
+    /// Daily minutes goal met.
+    var didFlame: Bool
+    /// Daily workouts goal met.
+    var didMedal: Bool
+    /// All daily goals met.
+    var didCheck: Bool
+
+    init(status: DayHistoryStatus) {
+        title = status.title
+        isInactive = status.isInactive
+        didStrength = status.didStrength
+        didFlame = status.didFlame
+        didMedal = status.didMedal
+        didCheck = status.didCheck
+    }
+
+    init(
+        title: String,
+        isInactive: Bool = false,
+        didStrength: Bool,
+        didFlame: Bool,
+        didMedal: Bool,
+        didCheck: Bool
+    ) {
+        self.title = title
+        self.isInactive = isInactive
+        self.didStrength = didStrength
+        self.didFlame = didFlame
+        self.didMedal = didMedal
+        self.didCheck = didCheck
+    }
 
 
 
@@ -35,7 +62,7 @@ struct HistoryRowView: View {
 
             Spacer(minLength: 8)
 
-            // Icons (hard-coded set you can map to real data later)
+            // Strength = workout done, Flame = minutes goal, Medal = workouts goal, Check = all goals
             icon(systemName: "figure.strengthtraining.traditional", isOn: didStrength, label: "Strength")
             icon(systemName: "flame.fill", isOn: didFlame, label: "Intensity")
             icon(systemName: "rosette", isOn: didMedal, label: "Medal")
