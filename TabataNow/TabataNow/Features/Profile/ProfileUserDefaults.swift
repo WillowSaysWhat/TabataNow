@@ -11,8 +11,6 @@ struct ProfileUserDefaults {
     
     @Default(key: "hasCompletedOnboarding", defaultValue: false) static var hasCompletedOnboarding: Bool
     
-    @Default(key: "isDarkModeEnabled", defaultValue: false) static var isDarkModeEnabled: Bool
-    
     // Daily Goals
     @Default(key: "DailyMinutesGoal", defaultValue: 10) static var dailyMinutesGoal: Int
     

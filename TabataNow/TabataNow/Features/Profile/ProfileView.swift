@@ -41,13 +41,6 @@ struct ProfileView: View {
                             Image(systemName: "gearshape")
                                 .foregroundStyle(.secondary)
                         }
-                        
-                        Toggle("", isOn: Binding(
-                            get: { ProfileUserDefaults.isDarkModeEnabled },
-                            set: { ProfileUserDefaults.isDarkModeEnabled = $0 }
-                        ))
-                        .toggleStyle(SwitchToggleStyle(tint: .neon))
-                        .labelsHidden()
                     }
                 }
                 .padding(.horizontal)

@@ -32,4 +32,3 @@ Rules:
 - Use ObservableObject or @Observable appropriately
 - Avoid massive Views — break into smaller components
 
-use 

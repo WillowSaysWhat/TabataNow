@@ -29,6 +29,19 @@ A Tabata timer for iOS. Create custom HIIT sessions, run workouts with audio cue
 3. Select a simulator or connected device.
 4. Build and run (`⌘R`).
 
+### OpenAI API key (AI workout generation)
+
+AI workout generation requires a developer OpenAI API key:
+
+1. Copy the example secrets file:
+   ```bash
+   cp TabataNow/TabataNow/Config/Secrets.example.xcconfig TabataNow/TabataNow/Config/Secrets.xcconfig
+   ```
+2. Open `TabataNow/TabataNow/Config/Secrets.xcconfig` and replace `your-key-here` with your OpenAI API key.
+3. Rebuild the app.
+
+`Secrets.xcconfig` is gitignored and never committed.
+
 ## Project Structure
 
 The app follows **MVVM** architecture. Source lives under `TabataNow/TabataNow/`.
@@ -36,13 +49,17 @@ The app follows **MVVM** architecture. Source lives under `TabataNow/TabataNow/`
 ```
 TabataNow/
 ├── App/                    # App entry point and global configuration
+├── Config/                 # xcconfig templates for local secrets
 ├── Features/
 │   ├── Dashboard/          # Home screen, activity ring, workout history
 │   ├── Profile/            # Stats, goals, settings
-│   ├── Session/            # Create, edit, list, and detail views
+│   ├── Session/            # Create, edit, list, detail, and AI generation
 │   ├── Timer/              # Tabata timer UI and logic
 │   └── TABView/            # Root tab bar navigation
+├── Models/                 # DTOs and generation preferences
+├── Services/               # OpenAI networking
 ├── Shared/                 # SwiftData models shared across features
+├── Utilities/              # App secrets and helpers
 └── Resources/              # Colours, assets, shared UI components
 ```
 
@@ -89,6 +106,7 @@ TABView (Tab Bar)
 │   ├── Activity ring & medals
 │   ├── 3-day history list
 │   └── Select Workout → SessionListView → SessionDetailView → TimerView
+│       └── Sparkles button → GenerateSessionView → Review → Save
 ├── History (placeholder)
 └── Profile
     ├── Progress gauge & stat cards
@@ -114,7 +132,7 @@ TABView (Tab Bar)
 - [ ] History tab (dedicated workout log)
 - [ ] PushUps Now quick-start workout
 - [ ] Awards and levelling system (medals/trophies currently use placeholder data on Dashboard)
-- [ ] AI generated workouts
+- [x] AI generated workouts
 ## License
 
 See repository settings for license details.

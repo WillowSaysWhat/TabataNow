@@ -1,0 +1,9 @@
+# Xcode user state
+*.xcuserstate
+xcuserdata/
+
+# Local API secrets
+TabataNow/TabataNow/Config/Secrets.xcconfig
+
+# macOS
+.DS_Store

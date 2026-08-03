@@ -20,6 +20,16 @@ final class NewSessionViewModel: ObservableObject {
     // Validation error message for display
     @Published var validationMessage: String? = nil
 
+    init() {}
+
+    init(from generated: GeneratedTabataSessionDTO) {
+        name = generated.name
+        descriptionText = generated.description
+        exerciseTime = String(generated.exerciseTime)
+        restTime = String(generated.restTime)
+        repetitions = String(generated.repetitions)
+    }
+
     func validate() -> Bool {
         validationMessage = nil
 

@@ -12,6 +12,7 @@ import SwiftData
 @MainActor
 final class SessionListViewModel: ObservableObject {
     @Published var isPresentingNewSession: Bool = false
+    @Published var isPresentingGenerateSession: Bool = false
 }
 
 struct SessionListView: View {
@@ -38,6 +39,14 @@ struct SessionListView: View {
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 Button {
+                    viewModel.isPresentingGenerateSession = true
+                } label: {
+                    Image(systemName: "sparkles")
+                }
+                .accessibilityLabel("Generate AI Workout")
+            }
+            ToolbarItem(placement: .primaryAction) {
+                Button {
                     viewModel.isPresentingNewSession = true
                 } label: {
                     Image(systemName: "plus")
@@ -46,7 +55,12 @@ struct SessionListView: View {
             }
         }
         .sheet(isPresented: $viewModel.isPresentingNewSession) {
-            NewSessionView()
+            NavigationStack {
+                NewSessionView()
+            }
+        }
+        .sheet(isPresented: $viewModel.isPresentingGenerateSession) {
+            GenerateSessionView()
         }
     }
 }

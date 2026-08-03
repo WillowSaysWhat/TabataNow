@@ -25,9 +25,7 @@ struct TABView: View {
                     Label("Profile", systemImage: "person.fill")
                 }
         }
-
-        
-       
+        .preferredColorScheme(.dark)
     }
     
 }
@@ -37,8 +35,6 @@ struct TABView: View {
 
 #Preview {
     TABView()
-        .preferredColorScheme(.dark)
-        
 }
 
 

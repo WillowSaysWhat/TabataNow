@@ -46,7 +46,7 @@ final class ProfileViewModel: ObservableObject {
         let now = Date()
         
         // Get start of today and this week
-        let startOfToday = calendar.startOfDay(for: now)
+        
         guard let startOfWeek = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: now)) else {
             return
         }
